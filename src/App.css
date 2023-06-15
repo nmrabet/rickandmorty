@@ -90,10 +90,16 @@
 }
 
 .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: 1em 0;
-  text-align: center;
+  gap: 20px;
 }
 
-.pagination-btn {
-  margin-right: 0.5em;
+.box {
+  border: 2px solid #40b5cb;
+  background-color: #40b5cb;
+  padding: 2px 4px;
+  border-radius: 50px;
 }

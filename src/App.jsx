@@ -3,22 +3,17 @@ import logo from "./assets/Rick_and_Morty_logo.png";
 import CardList from "./components/CardList";
 import useSWR from "swr";
 import "./App.css";
-import Pagination from "./Pagination";
 
 function App() {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(4);
+  const [pageIndex, setPageIndex] = useState(0);
 
-  const url = "https://rickandmortyapi.com/api/character";
-  const { data, error, isLoading } = useSWR(url, fetcher);
+  const { data, error, isLoading } = useSWR(
+    `https://rickandmortyapi.com/api/character?page=${pageIndex}`,
+    fetcher
+  );
 
   if (error) return <div>Failed to fetch users.</div>;
-  if (isLoading) return <h2 className="loader">Loading...</h2>;
-
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = data.results.slice(firstPostIndex, lastPostIndex);
 
   return (
     <div className="app">
@@ -32,8 +27,18 @@ function App() {
           className="search"
         />
       </div>
-      <CardList details={currentPosts} />
-      <Pagination totalPosts={data.results.length} postsPerPage={postsPerPage} setCurrentPage={setCurrentPage}/>
+      {isLoading ? (
+        <h2 className="loader">Loading...</h2>
+      ) : (
+        <CardList details={data.results} />
+      )}
+      <div className="pagination">
+        <button className="pg-btn" onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+        <p>{pageIndex - 1}</p>
+        <p className="box">{pageIndex}</p>
+        <p>{pageIndex + 1}</p>
+        <button  className="pg-btn"onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+      </div>
     </div>
   );
 }
