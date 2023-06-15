@@ -10,6 +10,15 @@ function Card({ id, image, name, status, gender, species }) {
     badgeText = "unknown";
   }
 
+  let genderCharacter;
+  if (gender === "Female") {
+    genderCharacter = "female";
+  } else if (gender === "Male") {
+    genderCharacter = "male";
+  } else {
+    genderCharacter = "nogender";
+  }
+
   return (
     <div>
       <div key={id} className="details-container">
@@ -17,9 +26,10 @@ function Card({ id, image, name, status, gender, species }) {
         <div className="details-text">
           <span className={`status ${badgeText}`}>{status}</span>
           <h3 className="details-name">{name}</h3>
-          <p>
-            {species} - {gender}
-          </p>
+          <div className="details-character">
+            <h4>{species}</h4>
+            <h4 className={`${genderCharacter}`}>{gender}</h4>
+          </div>
         </div>
       </div>
     </div>

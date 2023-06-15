@@ -73,6 +73,15 @@
 .details-name {
   max-width: 250px;
   margin: 0 auto;
+  color: goldenrod;
+}
+
+.details-character {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 200px;
 }
 
 .img {
@@ -113,4 +122,16 @@
   background-color: #40b5cb;
   padding: 2px 4px;
   border-radius: 50px;
+}
+
+.male {
+  color: #316596;
+}
+
+.female {
+  color: #f20791;
+}
+
+.nogender {
+  color: grey;
 }
