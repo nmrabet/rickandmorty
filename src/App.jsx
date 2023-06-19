@@ -1,12 +1,12 @@
 import { useState } from "react";
-import logo from "./assets/Rick_and_Morty_logo.png";
 import CardList from "./components/CardList";
 import useSWR from "swr";
 import "./App.css";
+import Header from "./components/Header";
 
 function App() {
   const fetcher = (...args) => fetch(...args).then((res) => res.json());
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
   const [name, setName] = useState("");
 
   const { data, error, isLoading } = useSWR(
@@ -14,26 +14,11 @@ function App() {
     fetcher
   );
 
-  if (error) return <div>Failed to fetch characters.</div>;
+  if (error) return <div className="loader">Failed to fetch characters.</div>;
 
   return (
     <div className="app">
-      <img
-        src={logo}
-        alt="Rick and Morty logo"
-        className="logo"
-        onClick={() => setPageIndex(1)}
-      />
-      <div className="searchbar">
-        <input
-          type="text"
-          name=""
-          id=""
-          placeholder="Search character..."
-          className="search"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </div>
+      <Header setPageIndex={setPageIndex} setName={setName} />
       {isLoading ? (
         <h2 className="loader">Loading...</h2>
       ) : (
@@ -42,12 +27,12 @@ function App() {
       <div className="pagination">
         <button
           className="pg-btn"
-          disabled={pageIndex === 1}
+          disabled={pageIndex < 2}
           onClick={() => setPageIndex(pageIndex - 1)}
         >
           Previous
         </button>
-        <p>{pageIndex === 1 ? null : pageIndex - 1}</p>
+        <p>{pageIndex === 1 && null}</p>
         <p className="box">{pageIndex}</p>
         <p>{pageIndex + 1}</p>
         <button
